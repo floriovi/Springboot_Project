@@ -10,8 +10,9 @@ const checkStatus = response => {
     return Promise.reject(error);
 }
 
+// This is fetched from our backend StudentController
 export const getAllStudents = () =>
-    fetch("http://:8080/api/vs/students")
+    fetch("api/v1/students")
         .then(checkStatus);
 
 

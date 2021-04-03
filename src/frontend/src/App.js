@@ -1,28 +1,33 @@
+import { useState, useEffect } from 'react'
 import React from 'react';
-import {Button, Radio} from 'antd';
 import './App.css';
-import './App.css';
+import {getAllStudents} from "./client";
 
 function App() {
-    const age = 23;
-    let name = "Vincenzo";
-    return (
-        <div className="App">
-            <p>Hello React</p>
-            <p>My name is {name} and I am {age} years old!</p>
-            <p>
-                Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <Button type="primary">Antd Button </Button>
-            <br/>
+const [students, setStudents] = useState([])
 
-            <Radio.Group value='large'>
-                <Radio.Button value="large">Large</Radio.Button>
-                <Radio.Button value="default">Default</Radio.Button>
-                <Radio.Button value="small">Small</Radio.Button>
-            </Radio.Group>
-        </div>
-    );
+    const fetchStudents = () => {
+        getAllStudents()
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setStudents(data);
+            })
+    }
+
+    useEffect(() => {
+        console.log("component is mounted")
+        fetchStudents();
+    }, []);
+
+    if (students.length <= 0) {
+        return "no data";
+    }
+
+    return students.map((student, index) => {
+       return <p key={index}>{student.id} {student.name} {student.gender} {student.age} {student.email}</p>;
+    })
+
 }
 
 export default App;

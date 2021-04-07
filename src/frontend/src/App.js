@@ -56,7 +56,7 @@ function App() {
             .then(data => {
                 console.log(data);
                 setStudents(data);
-                setFetching(true);
+                setFetching(false);
             })
     }
 
